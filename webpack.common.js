@@ -33,7 +33,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new CopyPlugin({
       patterns: [
-        { from: path.resolve(__dirname, 'src/images'), to: 'images' },
+        { from: path.resolve(__dirname, 'src/icons'), to: 'icons' },
         { from: path.resolve(__dirname, 'src/manifest.json')},
       ],
     }),
