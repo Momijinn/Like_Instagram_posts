@@ -9,6 +9,6 @@ This software is released under the MIT License, see LICENSE.
 
 ## Author
 
-Twitter](https://twitter.com/momijinn_aka)
+[Twitter](https://twitter.com/momijinn_aka)
 
 [Blog](https://www.autumn-color.com/)
