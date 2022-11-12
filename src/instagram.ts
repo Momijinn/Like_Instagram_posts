@@ -1,5 +1,5 @@
 export class Instagram {
-  private _interval: number;
+  private _timeoutKey: string;
   private _timeoutId: number | null;
 
   private _mainRoleName: string;
@@ -7,12 +7,21 @@ export class Instagram {
   private _likeButtonElementClassName: string;
 
   constructor() {
-    this._interval = 3000;
+    this._timeoutKey = 'timeoutId';
     this._timeoutId = null;
 
     this._mainRoleName = 'main';
     this._articleRoleName = 'presentation';
     this._likeButtonElementClassName = '._aamw';
+  }
+
+  // 待機時間の取得
+  private getWaitTime = (): Promise<number> => {
+    return new Promise((resolve, _) => {
+      chrome.storage.local.get(this._timeoutKey, (result)=>{
+        resolve(result[this._timeoutKey] || 5);
+      });
+    });
   }
 
   // 対象 dom のロード完了
@@ -42,8 +51,12 @@ export class Instagram {
 
 
 
-  private launchLikeArticles = async (articleElements: HTMLElement[]) => {
-    const promise = articleElements.map((element) => {
+  private launchLikeArticles = async (mainElement: HTMLElement) => {
+    // get like button
+    const articleElements = this.getArticleElements(mainElement);
+    const notLikeArticleElements = this.getNotLikeArticleElements(articleElements);
+
+    const promise = notLikeArticleElements.map((element) => {
       return new Promise((resolve, _) => {
         element.click();
         resolve('');
@@ -62,14 +75,17 @@ export class Instagram {
       return;
     }
 
-    const articleElements = this.getArticleElements(mainElement);
-    const notLikeElements = this.getNotLikeArticleElements(articleElements);
+    // いいねをする時間の取得
+    const timeoutTime = await this.getWaitTime();
 
-    // ここでいいねをする
+    // いいねをする
     if (this._timeoutId !== null) {
       clearTimeout(this._timeoutId);
     }
-    this._timeoutId = window.setTimeout(this.launchLikeArticles, this._interval, notLikeElements);
+    this._timeoutId = window.setTimeout(
+      this.launchLikeArticles,
+      (timeoutTime) * 1000, mainElement
+    );
     return;
   }
 }

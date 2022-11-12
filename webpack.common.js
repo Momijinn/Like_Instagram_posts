@@ -5,10 +5,13 @@ const CopyPlugin = require("copy-webpack-plugin");
 const JsonMinimizerPlugin = require("json-minimizer-webpack-plugin");
 
 module.exports = {
-  entry: path.resolve(__dirname, 'src/content-script.ts'),
+  entry: {
+    'content-script': path.resolve(__dirname, 'src/content-script.ts'),
+    'popup/popup': path.resolve(__dirname, 'src/popup/popup.ts'),
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'content-script.js',
+    filename: '[name].js',
     clean: true,
   },
 
@@ -26,11 +29,20 @@ module.exports = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
+      {
+        test: /\.(scss|sass|css)$/i,
+        use: [ "style-loader", 'css-loader', 'sass-loader' ],
+      },
     ],
   },
 
   plugins: [
     new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'src/popup/popup.html'),
+      filename: "popup/popup.html",
+      inject: false,
+    }),
     new CopyPlugin({
       patterns: [
         { from: path.resolve(__dirname, 'src/icons'), to: 'icons' },
