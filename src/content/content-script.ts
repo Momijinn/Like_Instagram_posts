@@ -2,6 +2,8 @@ import { Instagram } from "./instagram";
 
 const instagram = new Instagram();
 
+const body = document.querySelector("body");
+
 const main = () => {
   instagram.fetchLikeArticle(document);
 };
