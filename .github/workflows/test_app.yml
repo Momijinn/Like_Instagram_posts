@@ -5,7 +5,7 @@ on:
       - "src/**"
 
 jobs:
-  test_firebase:
+  test_app:
     env:
     runs-on: ubuntu-20.04
     steps:
