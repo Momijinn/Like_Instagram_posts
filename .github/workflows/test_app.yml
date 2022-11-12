@@ -6,7 +6,6 @@ on:
 
 jobs:
   test_app:
-    env:
     runs-on: ubuntu-20.04
     steps:
       - name: Setup checkout
