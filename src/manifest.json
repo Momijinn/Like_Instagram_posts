@@ -9,14 +9,16 @@
     "48": "./icons/icon48.png",
     "128": "./icons/icon128.png"
   },
+  "permissions": ["storage"],
   "content_scripts": [
     {
-      "matches": [
-        "https://www.instagram.com/"
-      ],
+      "matches": ["https://www.instagram.com/"],
       "js": ["content-script.js"],
       "all_frames": true,
       "run_at": "document_end"
     }
-  ]
+  ],
+  "action": {
+    "default_popup": "popup/popup.html"
+  }
 }

@@ -1,0 +1,47 @@
+@charset "utf-8";
+
+$primary-color: rgb(62, 74, 125);
+
+html,
+body {
+  width: 25rem;
+  margin: 0;
+  padding: 0;
+
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", Meiryo, sans-serif;
+}
+
+.header {
+  width: 100%;
+  padding: 1rem;
+  background-color: $primary-color;
+
+  .title {
+    font-size: 1rem;
+    font-weight: bolder;
+    color: whitesmoke;
+  }
+}
+
+.container {
+  padding: 1rem;
+}
+
+.content {
+  padding: 0.3rem;
+
+  .content-title {
+    font-size: 0.9rem;
+    padding-bottom: 0.3rem;
+  }
+}
+
+.timeout-time {
+  display: flex;
+  align-items: center;
+
+  .sec {
+    padding-left: 0.5rem;
+  }
+}
