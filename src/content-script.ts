@@ -4,11 +4,10 @@ const instagram = new Instagram();
 
 const main = () => {
   instagram.fetchLikeArticle(document);
-}
+};
 
-
-window.addEventListener('scroll', (_) => {
+window.addEventListener("scroll", (_) => {
   instagram.fetchLikeArticle(document);
 });
 
-window.addEventListener('load', main, false);
+window.addEventListener("load", main, false);
