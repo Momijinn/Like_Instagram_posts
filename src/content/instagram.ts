@@ -1,3 +1,15 @@
+import { Response } from "./common";
+
+interface FetchLikeArticleResponse {
+  status: Response;
+  payload: number;
+}
+
+interface LaunchLikeArticlesResponse {
+  status: Response;
+  payload: number;
+}
+
 export class Instagram {
   private _timeoutKey: string;
   private _timeoutId: number | null;
@@ -16,7 +28,7 @@ export class Instagram {
   }
 
   // 待機時間の取得
-  private getWaitTime = (): Promise<number> => {
+  private getTimeoutTime = (): Promise<number> => {
     return new Promise((resolve, _) => {
       chrome.storage.local.get(this._timeoutKey, (result) => {
         resolve(result[this._timeoutKey] || 5);
@@ -62,7 +74,9 @@ export class Instagram {
     return response;
   };
 
-  private launchLikeArticles = async (mainElement: HTMLElement) => {
+  private launchLikeArticles = async (
+    mainElement: HTMLElement
+  ): Promise<LaunchLikeArticlesResponse> => {
     // get like button
     const articleElements = this.getArticleElements(mainElement);
     const notLikeArticleElements =
@@ -75,29 +89,44 @@ export class Instagram {
       });
     });
     console.info("launch: ", promise.length);
-    Promise.all(promise);
+    await Promise.all(promise);
+    return {
+      status: Response.SUCCESS,
+      payload: promise.length,
+    };
   };
 
   // public 表示範囲に入っている投稿に対していいねをする
-  public fetchLikeArticle = async (document: Document) => {
+  public fetchLikeArticle = async (
+    document: Document
+  ): Promise<FetchLikeArticleResponse> => {
     const mainElement = this.getMainElement(document);
     if (!mainElement) {
       console.error("mainElement is empty");
-      return;
+      return {
+        status: Response.FAILED,
+        payload: -1,
+      };
     }
 
     // いいねをする時間の取得
-    const timeoutTime = await this.getWaitTime();
+    const timeoutTime = await this.getTimeoutTime();
 
     // いいねをする
     if (this._timeoutId !== null) {
       clearTimeout(this._timeoutId);
     }
-    this._timeoutId = window.setTimeout(
-      this.launchLikeArticles,
-      timeoutTime * 1000,
-      mainElement
-    );
-    return;
+
+    return new Promise((resolve, _) => {
+      this._timeoutId = window.setTimeout(async () => {
+        const response = await this.launchLikeArticles(mainElement);
+        console.info("launchLikeArticles response: ", response);
+
+        resolve({
+          status: Response.SUCCESS,
+          payload: response.payload,
+        });
+      }, timeoutTime * 1000);
+    });
   };
 }
