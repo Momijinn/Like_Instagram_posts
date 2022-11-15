@@ -15,7 +15,7 @@ window.addEventListener("scroll", (_) => {
   instagram.fetchLikeArticle(document).then((e) => {
     // todo fix
     if (e.status === Response.SUCCESS && e.payload !== "") {
-      snack.show(`${e.payload} を投稿をいいねしました`, e.status);
+      snack.show(`${e.payload} の投稿をいいねしました`, e.status);
     }
   });
 });
