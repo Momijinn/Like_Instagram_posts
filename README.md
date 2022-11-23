@@ -4,15 +4,18 @@ Instagram のタイムラインに表示されている投稿にいいねをす�
 
 ## Screen shot
 
-Instagramのタイムラインにて、設定した時間になるといいねを贈ります。
+Instagramのタイムラインにて、設定した時間まで投稿写真を表示し続けると"いいね"をします。
 
-※ DOMに表示されている投稿のみ。
+いいねを贈る条件は、投稿されている投稿されている画像・動画がウィンドウサイズに収まっているかです。
 
-![スクリーンショット 2022-11-13 1 09 27](https://user-images.githubusercontent.com/13119897/201486760-f9168527-8475-4e4e-9898-407088248991.jpg)
+![スクリーンショット 2022-11-24 0 42 43](https://user-images.githubusercontent.com/13119897/203592761-88681ab3-0048-473c-b8f7-080d01d1e9d4.jpg)
 
 いいねを贈る時間は設定で変えられます。
 
-![スクリーンショット 2022-11-13 1 09 42](https://user-images.githubusercontent.com/13119897/201486767-47ee30b9-15c9-47ff-bf42-7c0ee2152283.jpg)
+<span style="color: red; ">※ 設定を短くしすぎると大量に"いいね"を贈ることになり、Instagramからブロックされます。</span>
+
+![スクリーンショット 2022-11-24 0 43 14](https://user-images.githubusercontent.com/13119897/203593493-6b749a78-7367-4b87-83a3-36653f515795.jpg)
+
 
 
 ## Usage
